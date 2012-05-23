@@ -1,3 +1,7 @@
+local_package.csx
+*.cspkg
+node_modules
+server.js.logs/
 
 #################
 ## Eclipse
