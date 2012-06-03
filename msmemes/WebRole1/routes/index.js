@@ -22,7 +22,7 @@ Routes.prototype = {
       if (error) throw error;
       
       client.createBlockBlobFromText('test1', 'first', 'FIRST!!!!1111ONEONEONELOLOLOL', function(error) {
-        throw error;
+        if (error) throw error;
         
         res.write('done with error=' + error);
         res.end();
