@@ -31,8 +31,12 @@ Routes.prototype = {
   },
   
   test2: function(req, res) {
-    res.write('table service is ' + this.tableService);
-    res.end();
+    var client = this.blobService;
+    client.getBlobToStream('test1', 'first', res, function(error){
+        if(error) throw error;
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end();
+    });;
   },
 
   debugAdd: function(req, res) {
