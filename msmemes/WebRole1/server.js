@@ -2,12 +2,14 @@
 /**
  * Module dependencies.
  */
-
-var uuid = require('node-uuid');
 var azure = require('azure'),
     express = require('express'),
     routes = require('./routes'),
     uuid = require('node-uuid');
+    
+
+// Local dependencies
+var setup = require('./startup.js');
 
 var app = module.exports = express.createServer();
 
@@ -34,6 +36,9 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/test', routes.test);
+
+// Initial set up
+setup.setup();
 
 app.listen(process.env.port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
