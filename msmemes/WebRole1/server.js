@@ -32,13 +32,22 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
-
-app.get('/', routes.index);
-app.get('/test', routes.test);
-
 // Initial set up
-setup.setup();
+//
+var tableService = azure.createTableService();
+var blobService = azure.createBlobService();
+setup.setup(tableService, blobService);
+
+// Routes
+//
+var r = new routes.Routes(tableService, blobService, uuid);
+app.get('/', r.index);
+app.get('/test', r.test.bind(r));
+app.get('/debugAdd', r.debugAdd.bind(r));
+app.get('/debugList', r.debugList.bind(r)); 
+app.get('/test2', r.test2.bind(r));
+app.get('/test3', function(req, res) { res.write('uuid' + uuid()); res.end(); });
+
 
 app.listen(process.env.port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
