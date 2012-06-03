@@ -17,7 +17,17 @@ Routes.prototype = {
   },
   
   test: function(req, res) { 
-    res.render('index', { title: 'Testasd' })
+    var client = this.blobService;
+    client.createContainerIfNotExists('test1', {publicAccessLevel: 'blob'}, function(error) {
+      if (error) throw error;
+      
+      client.createBlockBlobFromText('test1', 'first', 'FIRST!!!!1111ONEONEONELOLOLOL', function(error) {
+        throw error;
+        
+        res.write('done with error=' + error);
+        res.end();
+      });
+    });
   },
   
   test2: function(req, res) {
